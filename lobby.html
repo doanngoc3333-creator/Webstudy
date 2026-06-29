@@ -1,13 +1,64 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
-    <title>Lobby
-    </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(141, 122, 122, 0.15);
+            width: 350px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            font-size: 18px;
+            transition: .25s;
+        }
+
+        .menu a:hover {
+            background: #1d4ed8;
+            transform: translateY(-3px);
+        }
+    </style>
 </head>
 <body>
-    <h1>Selection</h1>
-    <h2><a href = "note.html"> Note</a></h2>
-    <h2>Library</h2>
-    <h2>setting</h2>
+    <div class="container">
+        <h1>Selection</h1>
+        <div class="menu">
+            <a href="note.html">Note</a>
+            <a href="Library.html">Library</a>
+            <a href="Setting.html">Settings</a>
+        </div>
+
+    </div>
+
 </body>
 </html>
