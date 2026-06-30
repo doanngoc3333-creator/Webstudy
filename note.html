@@ -2,9 +2,78 @@
 <html lang ="en">
 <head>
     <title>Note</title>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+        background:linear-gradient(135deg,#74b9ff,#0984e3);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+    }
+
+    .container{
+        width:650px;
+        background:white;
+        padding:35px;
+        border-radius:18px;
+        box-shadow:0 15px 30px rgba(0,0,0,.2);
+        text-align:center;
+    }
+
+    h1{
+        margin-bottom:25px;
+        color:#2d3436;
+    }
+
+    textarea{
+        width:100%;
+        height:280px;
+        padding:15px;
+        border:1px solid #dfe6e9;
+        border-radius:12px;
+        resize:none;
+        font-size:16px;
+        outline:none;
+        transition:.25s;
+    }
+
+    textarea:focus{
+        border-color:#0984e3;
+        box-shadow:0 0 8px rgba(9,132,227,.3);
+    }
+
+    button{
+        margin-top:20px;
+        width:100%;
+        padding:14px;
+        background:#0984e3;
+        color:white;
+        border:none;
+        border-radius:10px;
+        font-size:17px;
+        font-weight:bold;
+        cursor:pointer;
+        transition:.25s;
+    }
+
+    button:hover{
+        background:#0769b7;
+        transform:translateY(-2px);
+    }
+</style>
 </head>
 <body>
-    <h1> enter your note today</h1>
+    <div class = "container">
+    <h1> Enter your note today</h1>
     <textarea placeholder ="Write your note"></textarea>
+    <button>save</button>
+    </div>
 </body>
 </html>
