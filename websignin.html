@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
-<html lang ="en">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+<meta charset="UTF-8">
+<title>Login</title>
+
 <style>
     *{
         margin:0;
@@ -75,15 +76,23 @@
 </style>
 
 </head>
-    <body>
-        <div class = "box">
-            <h1>Sign your name</h1>
-            <input type ="text" placeholder = "Sign in">
-            <input type = "password" placeholder ="Enter your password">
-            
-        </body>
-        <a href="lobby.html">
-            <button >Sign in</button>
-        </a>
-        </div>
+
+<body>
+
+<div class="box">
+
+<h1>Sign your name</h1>
+
+<form action="websignin.php" method="POST">
+    <input type="text" name="username" placeholder="Sign in" required>
+    <input type="password" name="password" placeholder="Enter your password" required>
+    <button type="submit">Sign in</button>
+</form>
+
+<?php if (isset($_GET['error'])): ?>
+    <p style="color:red; margin-top:10px;">Wrong user or password</p>
+<?php endif; ?>
+
+</div>
+</body>
 </html>
