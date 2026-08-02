@@ -26,4 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+
+header("Location: websignin.html");
+exit;
 ?>

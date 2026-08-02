@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Viewer</title>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .msg {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            text-align: center;
+            color: #d63031;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="content"></div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const file = params.get("file");
+
+console.log("FILE param:", file);
+
+const content = document.getElementById("content");
+
+if (!file) {
+
+    content.innerHTML = `<div class="msg">Không tìm thấy đường dẫn file (tham số "file" bị rỗng).</div>`;
+
+} else {
+
+
+    fetch(file, { method: "HEAD" })
+    .then(res => {
+
+        if (!res.ok) {
+
+            content.innerHTML = `<div class="msg">
+                Không tải được file (HTTP ${res.status}).<br>
+                Đường dẫn đang thử: <code>${file}</code>
+            </div>`;
+
+            return;
+        }
+
+        const iframe = document.createElement("iframe");
+        iframe.id = "viewer";
+        iframe.src = file;
+
+        content.innerHTML = "";
+        content.appendChild(iframe);
+
+    })
+    .catch(err => {
+
+        content.innerHTML = `<div class="msg">
+            Lỗi khi tải file: ${err}<br>
+            Đường dẫn đang thử: <code>${file}</code>
+        </div>`;
+
+    });
+
+}
+</script>
+
+</body>
+</html>

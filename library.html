@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Library</title>
+<meta charset="UTF-8">
+<title>Library</title>
+
 <style>
 *{
     margin:0;
@@ -12,9 +13,9 @@
 }
 
 body{
-        background:linear-gradient(135deg,#74b9ff,#0984e3);
-        padding:40px;
-    }
+    background:linear-gradient(135deg,#74b9ff,#0984e3);
+    padding:40px;
+}
 
 .container{
     max-width:800px;
@@ -45,6 +46,7 @@ h1{
     padding:14px 18px;
     border-radius:10px;
     transition:0.25s;
+    cursor:pointer;
 }
 
 .file:hover{
@@ -59,66 +61,110 @@ h1{
     font-size:13px;
     color:#636e72;
     margin-top:4px;
-    font-weight:normal;
 }
 
-.empty, .error{
+.empty,.error{
     text-align:center;
-    color:#636e72;
     padding:30px;
-    font-size:16px;
 }
 
 .error{
-    color:#d63031;
+    color:red;
 }
 </style>
+
 </head>
 <body>
-    <div class="container">
-        <h1>Library</h1>
-        <div class="category" id="bookList">
-            <div class="empty">Đang tải sách...</div>
-        </div>
-    </div>
+
+<div class="container">
+
+<h1>Library</h1>
+
+<div id="bookList" class="category">
+
+<div class="empty">
+Đang tải...
+</div>
+
+</div>
+
+</div>
 
 <script>
-fetch('library.php')
-    .then(res => res.json())
-    .then(data => {
-        console.log('Dữ liệu từ library.php:', data); // mở F12 > Console để xem nếu vẫn lỗi
-        const listEl = document.getElementById('bookList');
 
-        if (data.error) {
-            listEl.innerHTML = `<div class="error">Lỗi: ${data.error}</div>`;
-            return;
-        }
+const list=document.getElementById("bookList");
 
-        if (!Array.isArray(data) || data.length === 0) {
-            listEl.innerHTML = `<div class="empty">Chưa có sách nào trong database.</div>`;
-            return;
-        }
+fetch("library.php")
+.then(r=>r.json())
+.then(data=>{
 
-        listEl.innerHTML = data.map(book => {
-            // Chuẩn hoá đường dẫn: đổi \ thành /, và encode từng phần cho đúng chuẩn URL
-            const safePath = (book.FILE_PATH || '')
-                .split('\\').join('/')
-                .split('/')
-                .map(encodeURIComponent)
-                .join('/');
+    if(data.error){
 
-            return `
-            <a class="file" href="${safePath}" target="_blank" rel="noopener">
-                ${book.Name}
-                ${book.Description ? `<span class="desc">${book.Description}</span>` : ''}
-            </a>
-            `;
-        }).join('');
-    })
-    .catch(err => {
-        document.getElementById('bookList').innerHTML =
-            `<div class="error">Không gọi được library.php: ${err}</div>`;
+        list.innerHTML=`<div class="error">${data.error}</div>`;
+        return;
+
+    }
+
+    if(data.length===0){
+
+        list.innerHTML=`<div class="empty">Không có tài liệu.</div>`;
+        return;
+
+    }
+
+    list.innerHTML="";
+
+    data.forEach(book=>{
+
+        const a=document.createElement("a");
+
+        a.className="file";
+
+        a.href="#";
+
+        a.innerHTML=`
+            <strong>${book.Name}</strong>
+            <span class="desc">${book.Description??""}</span>
+        `;
+
+        a.onclick=function(e){
+
+            e.preventDefault();
+
+            fetch("library.php?id="+book.Number)
+
+            .then(r=>r.json())
+
+            .then(file=>{
+
+                if(file.error){
+
+                    alert(file.error);
+                    return;
+
+                }
+
+                window.location.href=
+                "viewer.html?file="+
+                encodeURIComponent(file.FILE_PATH);
+
+            });
+
+        };
+
+        list.appendChild(a);
+
     });
+
+})
+.catch(err=>{
+
+    list.innerHTML=
+    `<div class="error">${err}</div>`;
+
+});
+
 </script>
+
 </body>
 </html>
