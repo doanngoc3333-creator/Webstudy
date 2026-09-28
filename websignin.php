@@ -1,29 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 session_start();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    $db = new SQLite3(__DIR__ . '/DATABASE/login.db');
-
-    $stmt = $db->prepare('SELECT * FROM users WHERE USERNAME = :u AND PASSWORD = :p');
-    $stmt->bindValue(':u', $username, SQLITE3_TEXT);
-    $stmt->bindValue(':p', $password, SQLITE3_TEXT);
-
-    $result = $stmt->execute();
-    $row = $result->fetchArray(SQLITE3_ASSOC);
-
-    if ($row) {
-        $_SESSION['user_id'] = $row['ID'];
-        $_SESSION['username'] = $row['USERNAME'];
-        header('Location: lobby.html');
-        exit;
-    } else {
-        header('Location: websignin.html?error=1');
-        exit;
-    }
-}
-?>
+if (isset($_SESSION['user_id'])) { header('Location: dashboard.php'); exit; }
+$error = isset($_GET['error']);
+?><!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng nhập · Webstudy</title><link rel="stylesheet" href="assets/style.css"></head><body class="auth-page"><main class="auth-card"><a class="brand" href="websignin.php">Web<span>study</span></a><h1>Chào mừng trở lại</h1><p>Đăng nhập để tiếp tục học tập và quản lý tài liệu của bạn.</p><?php if($error): ?><div class="alert">Tên đăng nhập hoặc mật khẩu không đúng.</div><?php endif; ?><form action="index.php" method="post"><div class="form-group"><label for="username">Tên đăng nhập</label><input id="username" name="username" autocomplete="username" required autofocus></div><div class="form-group"><label for="password">Mật khẩu</label><input id="password" type="password" name="password" autocomplete="current-password" required></div><button class="button" type="submit">Đăng nhập</button></form></main></body></html>
