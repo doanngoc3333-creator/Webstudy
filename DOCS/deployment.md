@@ -12,4 +12,10 @@ sudo apt install php sqlite3
 
 ## Run Webstudy
 
-php -S localhost:8000
+cd /path/to/Webstudy
+php -S 0.0.0.0:8000
+
+# Tài khoản mẫu trong DATABASE/login.db
+# username: admin
+# password: 123456
+# Nên đổi mật khẩu trước khi đưa lên Internet.
